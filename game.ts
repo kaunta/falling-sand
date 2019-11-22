@@ -39,6 +39,18 @@ const penMove = (game: FallingSandGame) => (event: MouseEvent) => {
     if (game.drawing) {
         const i = event.offsetX + event.offsetY * game.canvas.width;
         game.world[i] = Species.Wall;
+        // dx line
+        const dx = Math.abs(event.movementX);
+        const sx = Math.sign(event.movementX);
+        for (let d = 0; d <= dx; d++) {
+            game.world[i - sx * d] = Species.Wall;
+        }
+        // dy line
+        const dy = Math.abs(event.movementY);
+        const sy = Math.sign(event.movementY);
+        for (let d = 0; d <= dy; d++) {
+            game.world[i - sx * dx - game.canvas.width * sy * d] = Species.Wall;
+        }
     }
 }
 

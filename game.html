@@ -3,10 +3,15 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Falling Sand Game</title>
+		<script src="game.js"></script>
 	</head>
 	<body>
 		<h1>Falling Sand Game</h1>
 		<canvas id="game-canvas" width=640 height=480></canvas>
+		<script>
+		game = new FallingSandGame(document.getElementById("game-canvas"));
+		game.draw();
+		</script>
 	</body>
 <style>
 body {

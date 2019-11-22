@@ -34,6 +34,8 @@ const penUp = (game: FallingSandGame) => (event: MouseEvent) => {
 };
 const penDown = (game: FallingSandGame) => (event: MouseEvent) => {
     game.drawing = true;
+    const i = event.offsetX + event.offsetY * game.canvas.width;
+    game.world[i] = Species.Wall;
 };
 const penMove = (game: FallingSandGame) => (event: MouseEvent) => {
     if (game.drawing) {

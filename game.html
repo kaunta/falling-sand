@@ -10,7 +10,11 @@
 		<canvas id="game-canvas" width=640 height=480></canvas>
 		<script>
 		game = new FallingSandGame(document.getElementById("game-canvas"));
-		game.draw();
+		tick = () => {
+			game.draw();
+			requestAnimationFrame(tick);
+		};
+		tick();
 		</script>
 	</body>
 <style>

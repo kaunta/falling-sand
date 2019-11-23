@@ -28,6 +28,49 @@ class FallingSandGame {
         ctx.putImageData(imageData, 0, 0);
     }
 
+    tick() {
+        const W = this.canvas.width;
+        const H = this.canvas.height;
+        const N = W * H;
+        let cell, x, y, j;
+        for (let i = N - 1; i >= 0; i--) {
+            x = i % W;
+            y = (i - x) / W;
+            switch (this.world[i]) {
+                case Species.Sand:
+                    // fall down
+                    j = i + W;
+                    if (this.world[j] === Species.Empty) {
+                        this.world[j] = Species.Sand;
+                        this.world[i] = Species.Empty;
+                        break;
+                    }
+                    if (Math.random() < 0.5) {
+                        // fall left
+                        if (x > 0) {
+                            j = i + W - 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Sand;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    } else {
+                        // fall right
+                        if (x < W) {
+                            j = i + W + 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Sand;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
     draw(x: number, y: number) {
         for (let dx = 0; dx < this.brushSize; dx++) {
             for (let dy = 0; dy < this.brushSize; dy++) {
@@ -69,9 +112,11 @@ const penMove = (game: FallingSandGame) => (event: MouseEvent) => {
 enum Species {
     Empty = 0,
     Wall,
+    Sand,
 }
 
 const Color = {
     [Species.Empty]: [0, 0, 0],
-    [Species.Wall]: [255, 255, 0],
+    [Species.Wall]: [127, 127, 127],
+    [Species.Sand]: [255, 255, 0],
 };

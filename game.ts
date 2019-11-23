@@ -3,7 +3,7 @@ class FallingSandGame {
     readonly world: Uint8Array;
     drawing: boolean = false;
     brush: Species = Species.Wall;
-
+    brushSize: number = 1;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -14,12 +14,11 @@ class FallingSandGame {
         this.canvas.addEventListener('mousemove', penMove(this));
     }
 
-    draw() {
+    render() {
         const ctx = this.canvas.getContext("2d");
         const imageData = ctx.createImageData(this.canvas.width, this.canvas.height);
         const unknownRGB = [236, 66, 245];
         for (let i = 0; i < this.canvas.width * this.canvas.height; i++) {
-            const cell = this.world[i];
             const [r, g, b] = Color[this.world[i]] || unknownRGB;
             imageData.data[4 * i + 0] = r;
             imageData.data[4 * i + 1] = g;
@@ -29,6 +28,15 @@ class FallingSandGame {
         ctx.putImageData(imageData, 0, 0);
     }
 
+    draw(x: number, y: number) {
+        for (let dx = 0; dx < this.brushSize; dx++) {
+            for (let dy = 0; dy < this.brushSize; dy++) {
+                const i = (x + dx) + (y + dy) * this.canvas.width;
+                this.world[i] = this.brush;
+            }
+        }
+    }
+
 }
 
 const penUp = (game: FallingSandGame) => (event: MouseEvent) => {
@@ -36,24 +44,24 @@ const penUp = (game: FallingSandGame) => (event: MouseEvent) => {
 };
 const penDown = (game: FallingSandGame) => (event: MouseEvent) => {
     game.drawing = true;
-    const i = event.offsetX + event.offsetY * game.canvas.width;
-    game.world[i] = game.brush;
+    game.draw(event.offsetX, event.offsetY);
 };
 const penMove = (game: FallingSandGame) => (event: MouseEvent) => {
     if (game.drawing) {
-        const i = event.offsetX + event.offsetY * game.canvas.width;
-        game.world[i] = game.brush;
+        const x = event.offsetX;
+        const y = event.offsetY;
+        game.draw(x, y);
         // dx line
         const dx = Math.abs(event.movementX);
         const sx = Math.sign(event.movementX);
         for (let d = 0; d <= dx; d++) {
-            game.world[i - sx * d] = game.brush;
+            game.draw(x - d * sx, y);
         }
         // dy line
         const dy = Math.abs(event.movementY);
         const sy = Math.sign(event.movementY);
         for (let d = 0; d <= dy; d++) {
-            game.world[i - sx * dx - game.canvas.width * sy * d] = game.brush;
+            game.draw(x - sx * dx, y - d * sy);
         }
     }
 }

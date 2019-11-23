@@ -69,9 +69,11 @@ const penMove = (game: FallingSandGame) => (event: MouseEvent) => {
 enum Species {
     Empty = 0,
     Wall,
+    Sand,
 }
 
 const Color = {
     [Species.Empty]: [0, 0, 0],
-    [Species.Wall]: [255, 255, 0],
+    [Species.Wall]: [127, 127, 127],
+    [Species.Sand]: [255, 255, 0],
 };

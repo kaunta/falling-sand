@@ -45,22 +45,25 @@ class FallingSandGame {
                         this.world[i] = Species.Empty;
                         break;
                     }
-                    // fall left
-                    if (x > 0) {
-                        j = i + W - 1;
-                        if (this.world[j] === Species.Empty) {
-                            this.world[j] = Species.Sand;
-                            this.world[i] = Species.Empty;
-                            break;
+                    if (Math.random() < 0.5) {
+                        // fall left
+                        if (x > 0) {
+                            j = i + W - 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Sand;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
                         }
-                    }
-                    // fall right
-                    if (x < W) {
-                        j = i + W + 1;
-                        if (this.world[j] === Species.Empty) {
-                            this.world[j] = Species.Sand;
-                            this.world[i] = Species.Empty;
-                            break;
+                    } else {
+                        // fall right
+                        if (x < W) {
+                            j = i + W + 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Sand;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
                         }
                     }
                     break;

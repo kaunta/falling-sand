@@ -14,7 +14,7 @@
 		<script>
 		game = new FallingSandGame(document.getElementById("game-canvas"));
 		tick = () => {
-			game.draw();
+			game.render();
 			requestAnimationFrame(tick);
 		};
 		tick();

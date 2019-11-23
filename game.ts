@@ -14,7 +14,7 @@ class FallingSandGame {
         this.canvas.addEventListener('mousemove', penMove(this));
     }
 
-    draw() {
+    render() {
         const ctx = this.canvas.getContext("2d");
         const imageData = ctx.createImageData(this.canvas.width, this.canvas.height);
         const unknownRGB = [236, 66, 245];

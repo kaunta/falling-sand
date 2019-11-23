@@ -45,6 +45,11 @@ class FallingSandGame {
                         this.world[i] = Species.Empty;
                         break;
                     }
+                    if (this.world[j] === Species.Water) {
+                        this.world[j] = Species.Sand;
+                        this.world[i] = Species.Water;
+                        break;
+                    }
                     if (Math.random() < 0.5) {
                         // fall left
                         if (x > 0) {

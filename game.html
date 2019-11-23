@@ -19,12 +19,14 @@
 		<script>
 		game = new FallingSandGame(document.getElementById("game-canvas"));
 		then = Date.now()
-		interval = 1000 / 24;
+		fps = 24;
+		interval = 1000 / fps;
 		tick = () => {
 			requestAnimationFrame(tick);
 			now = Date.now();
 			delta = now - then;
 			if (delta > interval) {
+				game.tick();
 				game.tick();
 				game.render();
 				then = now - (delta % interval);

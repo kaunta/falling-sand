@@ -29,13 +29,41 @@ class FallingSandGame {
     }
 
     tick() {
-        for (let i = 0; i < this.canvas.width * this.canvas.height; i++) {
-            const x = i % this.canvas.width;
-            const y = (i - x) / this.canvas.width;
-            if (Math.random() < 0.5) {
-                this.world[i] = Species.Sand;
-            } else {
-                this.world[i] = Species.Wall;
+        const W = this.canvas.width;
+        const H = this.canvas.height;
+        const N = W * H;
+        let cell, x, y, j;
+        for (let i = N - 1; i >= 0; i--) {
+            x = i % W;
+            y = (i - x) / W;
+            switch (this.world[i]) {
+                case Species.Sand:
+                    // fall down
+                    j = i + W;
+                    if (this.world[j] === Species.Empty) {
+                        this.world[j] = Species.Sand;
+                        this.world[i] = Species.Empty;
+                        break;
+                    }
+                    // fall left
+                    if (x > 0) {
+                        j = i + W - 1;
+                        if (this.world[j] === Species.Empty) {
+                            this.world[j] = Species.Sand;
+                            this.world[i] = Species.Empty;
+                            break;
+                        }
+                    }
+                    // fall right
+                    if (x < W) {
+                        j = i + W + 1;
+                        if (this.world[j] === Species.Empty) {
+                            this.world[j] = Species.Sand;
+                            this.world[i] = Species.Empty;
+                            break;
+                        }
+                    }
+                    break;
             }
         }
     }

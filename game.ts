@@ -80,6 +80,12 @@ class FallingSandGame {
         }
     }
 
+    clear() {
+        for (let i = 0; i < this.canvas.width * this.canvas.height; i++) {
+            this.world[i] = Species.Empty;
+        }
+    }
+
 }
 
 const penUp = (game: FallingSandGame) => (event: MouseEvent) => {

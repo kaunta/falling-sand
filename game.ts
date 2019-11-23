@@ -67,6 +67,36 @@ class FallingSandGame {
                         }
                     }
                     break;
+                case Species.Water:
+                    // fall down
+                    j = i + W;
+                    if (this.world[j] === Species.Empty) {
+                        this.world[j] = Species.Water;
+                        this.world[i] = Species.Empty;
+                        break;
+                    }
+                    if (Math.random() < 0.5) {
+                        // fall left
+                        if (x > 0) {
+                            j = i + W - 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Water;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    } else {
+                        // fall right
+                        if (x < W) {
+                            j = i + W + 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Water;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    }
+                    break;
             }
         }
     }
@@ -119,10 +149,12 @@ enum Species {
     Empty = 0,
     Wall,
     Sand,
+    Water,
 }
 
 const Color = {
     [Species.Empty]: [0, 0, 0],
     [Species.Wall]: [127, 127, 127],
     [Species.Sand]: [255, 255, 0],
+    [Species.Water]: [0, 0, 255],
 };

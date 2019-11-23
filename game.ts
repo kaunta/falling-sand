@@ -28,6 +28,18 @@ class FallingSandGame {
         ctx.putImageData(imageData, 0, 0);
     }
 
+    tick() {
+        for (let i = 0; i < this.canvas.width * this.canvas.height; i++) {
+            const x = i % this.canvas.width;
+            const y = (i - x) / this.canvas.width;
+            if (Math.random() < 0.5) {
+                this.world[i] = Species.Sand;
+            } else {
+                this.world[i] = Species.Wall;
+            }
+        }
+    }
+
     draw(x: number, y: number) {
         for (let dx = 0; dx < this.brushSize; dx++) {
             for (let dy = 0; dy < this.brushSize; dy++) {

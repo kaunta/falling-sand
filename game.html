@@ -18,9 +18,17 @@
 		<button onclick="game.brushSize = 16">16x</button>
 		<script>
 		game = new FallingSandGame(document.getElementById("game-canvas"));
+		then = Date.now()
+		interval = 1000 / 24;
 		tick = () => {
-			game.render();
 			requestAnimationFrame(tick);
+			now = Date.now();
+			delta = now - then;
+			if (delta > interval) {
+				game.tick();
+				game.render();
+				then = now - (delta % interval);
+			}
 		};
 		tick();
 		</script>

@@ -3,7 +3,7 @@ class FallingSandGame {
     readonly world: Uint8Array;
     drawing: boolean = false;
     brush: Species = Species.Wall;
-
+    brushSize: number = 1;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -29,8 +29,12 @@ class FallingSandGame {
     }
 
     draw(x: number, y: number) {
-        const i = x + y * this.canvas.width;
-        this.world[i] = this.brush;
+        for (let dx = 0; dx < this.brushSize; dx++) {
+            for (let dy = 0; dy < this.brushSize; dy++) {
+                const i = (x + dx) + (y + dy) * this.canvas.width;
+                this.world[i] = this.brush;
+            }
+        }
     }
 
 }

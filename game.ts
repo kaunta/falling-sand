@@ -8,7 +8,6 @@ class FallingSandGame {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.world = new Uint8Array(canvas.width * canvas.height);
-
         this.canvas.addEventListener('mousedown', penDown(this));
         this.canvas.addEventListener('mouseup', penUp(this));
         this.canvas.addEventListener('mousemove', penMove(this));
@@ -206,6 +205,7 @@ enum Species {
     Sand,
     Water,
     Plant,
+    Oil,
 }
 
 const Color = {
@@ -214,4 +214,5 @@ const Color = {
     [Species.Sand]: [255, 255, 0],
     [Species.Water]: [0, 0, 255],
     [Species.Plant]: [0, 255, 0],
+    [Species.Oil]: [139, 69, 19],
 };

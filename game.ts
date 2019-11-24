@@ -36,6 +36,36 @@ class FallingSandGame {
             x = i % W;
             y = (i - x) / W;
             switch (this.world[i]) {
+                case Species.Oil:
+                    // fall down
+                    j = i + W;
+                    if (this.world[j] === Species.Empty) {
+                        this.world[j] = Species.Oil;
+                        this.world[i] = Species.Empty;
+                        break;
+                    }
+                    if (Math.random() < 0.5) {
+                        // fall left
+                        if (x > 0) {
+                            j = i + W - 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Oil;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    } else {
+                        // fall right
+                        if (x < W) {
+                            j = i + W + 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Oil;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 case Species.Plant:
                     // grow up
                     j = i - W;
@@ -127,6 +157,11 @@ class FallingSandGame {
                     if (this.world[j] === Species.Empty) {
                         this.world[j] = Species.Water;
                         this.world[i] = Species.Empty;
+                        break;
+                    }
+                    if (this.world[j] === Species.Oil) {
+                        this.world[j] = Species.Water;
+                        this.world[i] = Species.Oil;
                         break;
                     }
                     if (Math.random() < 0.5) {

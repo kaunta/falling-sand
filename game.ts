@@ -37,6 +37,56 @@ class FallingSandGame {
             x = i % W;
             y = (i - x) / W;
             switch (this.world[i]) {
+                case Species.Plant:
+                    // grow up
+                    j = i - W;
+                    if (j > 0 && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow up left
+                    j = i - W - 1;
+                    if (j > 0 && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow up right
+                    j = i - W + 1;
+                    if (j > 0 && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow left
+                    j = i - 1;
+                    if (j > 0 && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow right
+                    j = i + 1;
+                    if (j > 0 && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow down left
+                    j = i + W - 1;
+                    if (j < N && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow down
+                    j = i + W;
+                    if (j < N && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    // grow down right
+                    j = i + W + 1;
+                    if (j < N && this.world[j] === Species.Water) {
+                        this.world[j] = Species.Plant;
+                        break;
+                    }
+                    break;
                 case Species.Sand:
                     // fall down
                     j = i + W;
@@ -155,6 +205,7 @@ enum Species {
     Wall,
     Sand,
     Water,
+    Plant,
 }
 
 const Color = {
@@ -162,4 +213,5 @@ const Color = {
     [Species.Wall]: [127, 127, 127],
     [Species.Sand]: [255, 255, 0],
     [Species.Water]: [0, 0, 255],
+    [Species.Plant]: [0, 255, 0],
 };

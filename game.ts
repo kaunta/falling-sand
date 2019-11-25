@@ -8,7 +8,6 @@ class FallingSandGame {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.world = new Uint8Array(canvas.width * canvas.height);
-
         this.canvas.addEventListener('mousedown', penDown(this));
         this.canvas.addEventListener('mouseup', penUp(this));
         this.canvas.addEventListener('mousemove', penMove(this));
@@ -37,6 +36,36 @@ class FallingSandGame {
             x = i % W;
             y = (i - x) / W;
             switch (this.world[i]) {
+                case Species.Oil:
+                    // fall down
+                    j = i + W;
+                    if (this.world[j] === Species.Empty) {
+                        this.world[j] = Species.Oil;
+                        this.world[i] = Species.Empty;
+                        break;
+                    }
+                    if (Math.random() < 0.5) {
+                        // fall left
+                        if (x > 0) {
+                            j = i + W - 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Oil;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    } else {
+                        // fall right
+                        if (x < W) {
+                            j = i + W + 1;
+                            if (this.world[j] === Species.Empty) {
+                                this.world[j] = Species.Oil;
+                                this.world[i] = Species.Empty;
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 case Species.Plant:
                     // grow up
                     j = i - W;
@@ -130,6 +159,11 @@ class FallingSandGame {
                         this.world[i] = Species.Empty;
                         break;
                     }
+                    if (this.world[j] === Species.Oil) {
+                        this.world[j] = Species.Water;
+                        this.world[i] = Species.Oil;
+                        break;
+                    }
                     if (Math.random() < 0.5) {
                         // fall left
                         if (x > 0) {
@@ -206,6 +240,7 @@ enum Species {
     Sand,
     Water,
     Plant,
+    Oil,
 }
 
 const Color = {
@@ -214,4 +249,5 @@ const Color = {
     [Species.Sand]: [255, 255, 0],
     [Species.Water]: [0, 0, 255],
     [Species.Plant]: [0, 255, 0],
+    [Species.Oil]: [139, 69, 19],
 };
